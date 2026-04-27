@@ -1,9 +1,29 @@
+"use client";
+
 import React from "react";
 import ReactDOM from "react-dom";
 import useFormCustomHook from "../components/hooks/FormCustomHook";
+import { useRegisterUserMutation } from "@/features/subApi/registerUser";
 const Register = ({ Form, SetGetModal, formHandler }) => {
+  const [registerUser] = useRegisterUserMutation();
+  const intiValue = {
+    fullName: "",
+    phoneNumber: "",
+    birthDate: "",
+    birthMonth: "",
+    birthYear: "",
+    emailId: "",
+    password: "",
+    confirmPassword: "",
+  };
   const [customForm, inputHandler, submitHandler, FormError] =
-    useFormCustomHook();
+    useFormCustomHook(intiValue);
+
+  const submitHandlerFun = (e) => {
+    e.preventDefault();
+    console.log("yeto");
+    submitHandler(registerUser);
+  };
   const getOprions = (starval, endval) => {
     let list = [];
     for (let i = starval; i <= endval; i++) {
@@ -133,7 +153,7 @@ const Register = ({ Form, SetGetModal, formHandler }) => {
                   <input
                     type="text"
                     className="form-control"
-                    name={item.name}
+                    name={item.email}
                     id="floatingInput"
                     onChange={inputHandler}
                     placeholder={item.email}
@@ -142,9 +162,9 @@ const Register = ({ Form, SetGetModal, formHandler }) => {
                 </div>
                 <div className="form-floating mb-3">
                   <input
-                    type="text"
+                    type="password"
                     className="form-control"
-                    name={item.phoneNo}
+                    name={item.password}
                     id="floatingInput"
                     onChange={inputHandler}
                     placeholder={item.password}
@@ -153,9 +173,9 @@ const Register = ({ Form, SetGetModal, formHandler }) => {
                 </div>
                 <div className="form-floating mb-3">
                   <input
-                    type="text"
+                    type="password"
                     className="form-control"
-                    name={item.phoneNo}
+                    name={item.confirmPassword}
                     id="floatingInput"
                     onChange={inputHandler}
                     placeholder={item.confirmPassword}
@@ -165,7 +185,7 @@ const Register = ({ Form, SetGetModal, formHandler }) => {
 
                 <button
                   className="btn btn-primary col-12 rounded-pill"
-                  onClick={submitHandler}
+                  onClick={submitHandlerFun}
                 >
                   Submit
                 </button>

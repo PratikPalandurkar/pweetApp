@@ -7,6 +7,7 @@ import mainIcon from "../../public/icons/letter-p.png";
 import Register from "./Register";
 import SignIn from "./SignIn";
 import { useRouter } from "next/navigation";
+import { ToastContainer } from "react-toastify";
 const page = () => {
   const router = useRouter();
   const [getModal, SetGetModal] = useState(false);
@@ -99,6 +100,7 @@ const page = () => {
                 </button>
               </div>
             </div>
+            <ToastContainer />
           </div>
         </div>
       </div>

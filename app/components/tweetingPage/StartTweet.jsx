@@ -1,5 +1,6 @@
+"use client";
+
 import React, { useState } from "react";
-import { toast } from "react-toastify";
 
 const StartTweet = () => {
   const [inputValue, setInputValue] = useState("");
@@ -12,7 +13,6 @@ const StartTweet = () => {
   const onPostHandler = () => {
     setDisplayValue(displayValue + inputValue);
     setInputValue("");
-    toast.success("post successful");
   };
   return (
     <div className="container mt-5">

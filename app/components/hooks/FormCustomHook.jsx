@@ -1,10 +1,16 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
-import validator from "../../helper/validator";
-const useFormCustomHook = (File) => {
-  const [customForm, setCustomForm] = useState({});
+import validator from "../../../helper/validator";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/navigation";
+import FormData from "form-data";
+const useFormCustomHook = (intiValue = {}, File) => {
+  const [customForm, setCustomForm] = useState(intiValue);
   const [FormError, setFormError] = useState([]);
   const fullForm = new FormData();
-
+  const router = useRouter();
   try {
     // for file
     useEffect(() => {
@@ -26,17 +32,28 @@ const useFormCustomHook = (File) => {
       // obejct value check Formerror
       if (Object.values(validator(customForm)).length !== 0) {
         setFormError(Object.values(validator(customForm)));
-      }
-
-      if (Object.keys(customForm).length) {
-        Object.keys(customForm).forEach((item) => {
-          fullForm.append(item, customForm.item);
-        });
-        // cb is redux action function
-        cb(fullForm);
-        if (!cb) {
-          throw Error;
+        {
+          Object.values(validator(customForm)).map((errors) => {
+            return toast.error(errors);
+          });
         }
+      }
+      // router.push("/startTweeting");
+      console.log("customForm", customForm);
+      if (File) {
+        if (Object.keys(customForm).length) {
+          Object.keys(customForm).forEach((item) => {
+            console.log(item, customForm.item);
+            fullForm.append(item, customForm.item);
+          });
+          // cb is redux action function
+          cb(fullForm);
+          if (!cb) {
+            throw Error;
+          }
+        }
+      } else {
+        cb(customForm);
       }
     };
     return [customForm, inputHandler, submitHandler, FormError];

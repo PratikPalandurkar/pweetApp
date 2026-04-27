@@ -96,7 +96,7 @@ const page = () => {
                   className="btn text-primary border w-100 rounded-pill my-1 "
                   onClick={() => SetSignInModal(true)}
                 >
-                  Sign Up
+                  Sign Up Here
                 </button>
               </div>
             </div>
